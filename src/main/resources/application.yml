@@ -1,0 +1,11 @@
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+         core: DEBUG
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://raghavinfotech.database.windows.net:1433;database=milkman;user=adminuser@raghavinfotech;password=Welcome@123;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    initialization-mode: always
