@@ -39,6 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
         customers.setDob(custRequest.getDateOfBirth());
         customers.setAuthPin(custRequest.getAuthPin());
         customers.setAddress(custRequest.getAddress());
+        customers.setPincode(custRequest.getPincode());
         customers.setLandmark(custRequest.getLandmark());
         customers.setStatus(Constants.INACTIVE);
 
