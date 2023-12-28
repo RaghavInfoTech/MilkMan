@@ -13,4 +13,6 @@ public class Constants {
     public static final String FAILED = "FAILED";
     public static final String NO_FOUND_CODE = "404";
 
+
+    public static final String KEY = "MILKMANENCRYPTDECRYPTKEYSH";
 }

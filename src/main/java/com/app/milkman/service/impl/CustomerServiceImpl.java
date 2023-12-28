@@ -8,6 +8,7 @@ import com.app.milkman.model.CustomerRegResponse;
 import com.app.milkman.repository.CustomersRepository;
 import com.app.milkman.service.CustomerService;
 import com.app.milkman.utils.Constants;
+import com.app.milkman.utils.EncryptDecrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -26,7 +27,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private JWTService jwtService;
-
+    @Autowired
+    private EncryptDecrypt encryptDecrypt;
     @Override
     public CustomerRegResponse registerCustomer(CustomerRegRequest custRequest) {
         Customers customers = new Customers();
@@ -37,7 +39,8 @@ public class CustomerServiceImpl implements CustomerService {
         customers.setSphone(custRequest.getSecondaryPhone());
         customers.setEmailid(custRequest.getEmailId());
         customers.setDob(custRequest.getDateOfBirth());
-        customers.setAuthPin(custRequest.getAuthPin());
+
+        customers.setAuthPin(encryptDecrypt.encrypt(custRequest.getAuthPin(), KEY));
         customers.setAddress(custRequest.getAddress());
         customers.setPincode(custRequest.getPincode());
         customers.setLandmark(custRequest.getLandmark());
@@ -61,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerAuthResponse authenticate(CustomerAuthRequest authRequest) {
-        List<Customers> customers = customersRepository.getCustomersByEmailidOrPphoneAndAuthPin(authRequest.getEmailIdOrPhone(), authRequest.getEmailIdOrPhone(), authRequest.getAuthPin());
+        List<Customers> customers = customersRepository.getCustomersByEmailidOrPphoneAndAuthPin(authRequest.getEmailIdOrPhone(), authRequest.getEmailIdOrPhone(),encryptDecrypt.encrypt(authRequest.getAuthPin(), KEY) );
         CustomerAuthResponse response = CustomerAuthResponse.builder().build();
         if (!CollectionUtils.isEmpty(customers)) {
             response.setAuthToken(jwtService.GenerateToken(customers.get(0).getPphone()));
