@@ -13,5 +13,6 @@ public class CustomerRegRequest {
     private String dateOfBirth;
     private String authPin;
     private String address;
+    private String pincode;
     private String landmark;
 }

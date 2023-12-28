@@ -48,7 +48,8 @@ public class Customers implements Serializable {
 
     @Column(name = "address")
     private String address;
-
+    @Column(name = "pincode")
+    private String pincode;
     @Column(name = "landmark")
     private String landmark;
 
