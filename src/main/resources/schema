@@ -1,0 +1,25 @@
+-- milkman.customers definition
+
+-- Drop table
+
+-- DROP TABLE milkman.customers;
+
+CREATE TABLE milkman.customers (
+	id serial4 NOT NULL,
+	customerid varchar NULL,
+	firstname varchar NULL,
+	lastname varchar NULL,
+	pphone varchar NULL,
+	sphone varchar NULL,
+	emailid varchar NULL,
+	dob varchar NULL,
+	auth_pin varchar NULL,
+	address varchar NULL,
+	landmark varchar NULL,
+	createdby varchar NULL,
+	createdtime timestamp NULL,
+	updatedby varchar NULL,
+	updatedtime timestamp NULL,
+	status varchar NULL,
+	CONSTRAINT customers_pkey PRIMARY KEY (id)
+);

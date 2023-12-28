@@ -7,5 +7,12 @@ logging:
 
 spring:
   datasource:
-    url: jdbc:sqlserver://raghavinfotech.database.windows.net:1433;database=milkman;user=adminuser@raghavinfotech;password=Welcome@123;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    url: jdbc:postgresql://localhost:5432/milkman
+    username: postgres
+    password: testpassword
     initialization-mode: always
+
+server:
+  servlet:
+    contextPath: /milkman
+  port: 8081
