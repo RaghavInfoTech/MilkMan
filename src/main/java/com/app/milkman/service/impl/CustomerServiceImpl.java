@@ -29,33 +29,35 @@ public class CustomerServiceImpl implements CustomerService {
     private JWTService jwtService;
     @Autowired
     private EncryptDecrypt encryptDecrypt;
+
     @Override
     public CustomerRegResponse registerCustomer(CustomerRegRequest custRequest) {
         Customers customers = new Customers();
-        customers.setCustomerid(UUID.randomUUID().toString());
-        customers.setFirstname(custRequest.getFirstName());
-        customers.setLastname(custRequest.getLastName());
-        customers.setPphone(custRequest.getPrimaryPhone());
-        customers.setSphone(custRequest.getSecondaryPhone());
-        customers.setEmailid(custRequest.getEmailId());
+        customers.setCustomerId(UUID.randomUUID().toString());
+        customers.setFirstName(custRequest.getFirstName());
+        customers.setLastName(custRequest.getLastName());
+        customers.setPrimaryPhone(custRequest.getPrimaryPhone());
+        customers.setSecondaryPhone(custRequest.getSecondaryPhone());
+        customers.setEmailId(custRequest.getEmailId());
         customers.setDob(custRequest.getDateOfBirth());
 
         customers.setAuthPin(encryptDecrypt.encrypt(custRequest.getAuthPin(), KEY));
         customers.setAddress(custRequest.getAddress());
-        customers.setPincode(custRequest.getPincode());
+        customers.setPinCode(custRequest.getPincode());
         customers.setLandmark(custRequest.getLandmark());
         customers.setStatus(Constants.INACTIVE);
 
-        customers.setCreatedby(custRequest.getFirstName());
-        customers.setCreatedtime(LocalDateTime.now());
-        customers.setUpdatedby(custRequest.getFirstName());
-        customers.setUpdatedtime(LocalDateTime.now());
+        customers.setCreatedBy(custRequest.getFirstName());
+        customers.setCreatedTime(LocalDateTime.now());
+        customers.setUpdatedBy(custRequest.getFirstName());
+        customers.setUpdatedTime(LocalDateTime.now());
 
         /* Insert */
         Customers customer = customersRepository.save(customers);
 
         CustomerRegResponse response = CustomerRegResponse.builder().build();
-        response.setCustomerName(customer.getFirstname() + " " + customer.getLastname());
+        response.setCustomerName(customer.getFirstName() + " " + customer.getLastName());
+        response.setCustomerId(customer.getCustomerId());
         response.setStatusCode(SUCCESS_CODE);
         response.setStatus(SUCCESS);
 
@@ -64,13 +66,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerAuthResponse authenticate(CustomerAuthRequest authRequest) {
-        List<Customers> customers = customersRepository.getCustomersByEmailidOrPphoneAndAuthPin(authRequest.getEmailIdOrPhone(), authRequest.getEmailIdOrPhone(),encryptDecrypt.encrypt(authRequest.getAuthPin(), KEY) );
+        List<Customers> customers = customersRepository.getCustomersByEmailidOrPphoneAndAuthPin(authRequest.getEmailIdOrPhone(), authRequest.getEmailIdOrPhone(), encryptDecrypt.encrypt(authRequest.getAuthPin(), KEY));
         CustomerAuthResponse response = CustomerAuthResponse.builder().build();
         if (!CollectionUtils.isEmpty(customers)) {
-            response.setAuthToken(jwtService.GenerateToken(customers.get(0).getPphone()));
+            response.setAuthToken(jwtService.GenerateToken(customers.get(0).getPrimaryPhone()));
             response.setStatusCode(SUCCESS_CODE);
             response.setStatus(SUCCESS);
-            response.setCustomerName(customers.get(0).getFirstname() + " " + customers.get(0).getLastname());
+            response.setCustomerName(customers.get(0).getFirstName() + " " + customers.get(0).getLastName());
+            response.setCustomerId(customers.get(0).getCustomerId());
             return response;
         }
         response.setStatusCode(NO_FOUND_CODE);

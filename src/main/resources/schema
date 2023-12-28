@@ -16,10 +16,84 @@ CREATE TABLE milkman.customers (
 	auth_pin varchar NULL,
 	address varchar NULL,
 	landmark varchar NULL,
+	pincode varchar NULL,
 	createdby varchar NULL,
 	createdtime timestamp NULL,
 	updatedby varchar NULL,
 	updatedtime timestamp NULL,
 	status varchar NULL,
 	CONSTRAINT customers_pkey PRIMARY KEY (id)
+);
+
+
+-- milkman.orders definition
+
+-- Drop table
+
+-- DROP TABLE milkman.orders;
+
+CREATE TABLE milkman.orders (
+	orderid uuid NOT NULL,
+	customerid varchar NULL,
+	customername varchar NULL,
+	pphone varchar NULL,
+	emailid varchar NULL,
+	address varchar NULL,
+	pincode varchar NULL,
+	landmark varchar NULL,
+	orderdatetime timestamp NULL,
+	deliverydate varchar NULL,
+	deliverytimeslot varchar NULL,
+	orderstatus varchar NULL,
+	createdby varchar NULL,
+	createdtime timestamp NULL,
+	updatedby varchar NULL,
+	updatedtime timestamp NULL,
+	status varchar NULL,
+	deliverycharge numeric NULL,
+	ordertotal numeric NULL,
+	CONSTRAINT orders_pk PRIMARY KEY (orderid)
+);
+
+
+-- milkman.products definition
+
+-- Drop table
+
+-- DROP TABLE milkman.products;
+
+CREATE TABLE milkman.products (
+	productid uuid NOT NULL,
+	productname varchar NULL,
+	productdescription varchar NULL,
+	productprice numeric NOT NULL,
+	createdby varchar NULL,
+	createdtime timestamp NULL,
+	updatedby varchar NULL,
+	updatedtime timestamp NULL,
+	status varchar NULL,
+	CONSTRAINT products_pk PRIMARY KEY (productid)
+);
+
+
+-- milkman.product_orders definition
+
+-- Drop table
+
+-- DROP TABLE milkman.product_orders;
+
+CREATE TABLE milkman.product_orders (
+	product_order_id varchar NOT NULL,
+	orderid uuid NOT NULL,
+	productid uuid NULL,
+	productname varchar NULL,
+	productprice numeric NOT NULL,
+	quantity int4 NOT NULL,
+	createdby varchar NULL,
+	createdtime timestamp NULL,
+	updatedby varchar NULL,
+	updatedtime timestamp NULL,
+	status varchar NULL,
+	CONSTRAINT product_orders_fk FOREIGN KEY (orderid) REFERENCES milkman.orders(orderid),
+	CONSTRAINT product_orders_fk_1 FOREIGN KEY (productid) REFERENCES milkman.products(productid)
 );

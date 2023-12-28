@@ -12,4 +12,6 @@ public interface CustomersRepository extends JpaRepository<Customers, Void>, Jpa
 
     List<Customers> getCustomersByEmailidOrPphoneAndAuthPin(String emailId, String phone, String authPin);
 
+    Customers findByCustomerId(String customerId);
+
 }

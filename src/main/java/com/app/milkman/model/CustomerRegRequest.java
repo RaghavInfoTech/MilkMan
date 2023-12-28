@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class CustomerRegRequest {
 
+    private String customerId;
     private String firstName;
     private String lastName;
     private String primaryPhone;
@@ -15,4 +16,5 @@ public class CustomerRegRequest {
     private String address;
     private String pincode;
     private String landmark;
+    private String status;
 }

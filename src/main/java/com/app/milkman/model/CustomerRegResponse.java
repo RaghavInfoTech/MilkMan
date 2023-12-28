@@ -7,4 +7,5 @@ import lombok.Data;
 @Builder
 public class CustomerRegResponse extends ParentResponse {
     private String customerName;
+    private String customerId;
 }

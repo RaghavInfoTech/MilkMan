@@ -7,4 +7,5 @@ import lombok.Data;
 public class ParentResponse {
     public String status;
     public String statusCode;
+    public String errorMsg;
 }

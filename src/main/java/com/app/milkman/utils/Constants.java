@@ -12,7 +12,13 @@ public class Constants {
 
     public static final String FAILED = "FAILED";
     public static final String NO_FOUND_CODE = "404";
-
+    public static final String INTERNAL_ERROR_CODE = "500";
 
     public static final String KEY = "MILKMANENCRYPTDECRYPTKEYSH";
+
+    public static final String ADMIN = "ADMIN";
+
+    public static final String ORDER_PLACED = "ORDER PLACED";
+    public static final String IN_PROGRESS = "IN PROGRESS";
+    public static final String DELIVERED = "DELIVERED";
 }

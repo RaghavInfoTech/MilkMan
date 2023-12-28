@@ -8,4 +8,5 @@ import lombok.Data;
 public class CustomerAuthResponse extends ParentResponse {
     private String authToken;
     private String customerName;
+    private String customerId;
 }
