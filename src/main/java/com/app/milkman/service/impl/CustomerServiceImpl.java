@@ -8,7 +8,7 @@ import com.app.milkman.model.CustomerRegResponse;
 import com.app.milkman.repository.CustomersRepository;
 import com.app.milkman.service.CustomerService;
 import com.app.milkman.utils.Constants;
-import com.app.milkman.utils.EncryptDecrypt;
+import com.app.milkman.component.EncryptDecrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

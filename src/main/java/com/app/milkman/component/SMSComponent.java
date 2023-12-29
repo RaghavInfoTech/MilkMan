@@ -1,7 +1,8 @@
-package com.app.milkman.utils;
+package com.app.milkman.component;
 
 import com.app.milkman.model.ParentResponse;
 import com.app.milkman.model.SMSRequest;
+import com.app.milkman.utils.Constants;
 import com.twilio.Twilio;
 import com.twilio.type.PhoneNumber;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,7 @@ import com.twilio.rest.api.v2010.account.Message;
 
 @Slf4j
 @Component
-public class SMSService {
+public class SMSComponent {
     @Autowired
     EncryptDecrypt encryptDecrypt;
 
