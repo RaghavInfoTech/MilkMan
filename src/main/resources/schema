@@ -33,7 +33,7 @@ CREATE TABLE milkman.customers (
 -- DROP TABLE milkman.orders;
 
 CREATE TABLE milkman.orders (
-	orderid uuid NOT NULL,
+	orderid varchar NOT NULL,
 	customerid varchar NULL,
 	customername varchar NULL,
 	pphone varchar NULL,
@@ -63,7 +63,7 @@ CREATE TABLE milkman.orders (
 -- DROP TABLE milkman.products;
 
 CREATE TABLE milkman.products (
-	productid uuid NOT NULL,
+	productid varchar NOT NULL,
 	productname varchar NULL,
 	productdescription varchar NULL,
 	productprice numeric NOT NULL,
@@ -84,8 +84,8 @@ CREATE TABLE milkman.products (
 
 CREATE TABLE milkman.product_orders (
 	product_order_id varchar NOT NULL,
-	orderid uuid NOT NULL,
-	productid uuid NULL,
+	orderid varchar NOT NULL,
+	productid varchar NULL,
 	productname varchar NULL,
 	productprice numeric NOT NULL,
 	quantity int4 NOT NULL,

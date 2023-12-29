@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
-@Table(name = "milkman.products")
+@Table(name = "products", schema = "milkman")
 public class Products implements Serializable {
 
     private static final long serialVersionUID = 1L;

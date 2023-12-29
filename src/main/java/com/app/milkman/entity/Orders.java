@@ -2,21 +2,19 @@ package com.app.milkman.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * $table.getTableComment()
  */
 @Data
 @Entity
-@Table(name = "milkman.orders")
+@Table(name = "orders", schema = "milkman")
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,7 +48,7 @@ public class Orders implements Serializable {
     private LocalDateTime orderDateTime;
 
     @Column(name = "deliverydate")
-    private String deliveryDate;
+    private LocalDate deliveryDate;
 
     @Column(name = "deliverytimeslot")
     private String deliveryTimeSlot;
@@ -78,5 +76,9 @@ public class Orders implements Serializable {
 
     @Column(name = "ordertotal", nullable = false)
     private BigDecimal orderTotal;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderid", referencedColumnName = "orderid")
+    private List<ProductOrders> productOrders;
 
 }

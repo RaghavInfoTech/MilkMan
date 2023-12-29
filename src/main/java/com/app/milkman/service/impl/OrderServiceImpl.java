@@ -4,19 +4,22 @@ import com.app.milkman.entity.Customers;
 import com.app.milkman.entity.Orders;
 import com.app.milkman.entity.ProductOrders;
 import com.app.milkman.entity.Products;
-import com.app.milkman.model.OrderRegRequest;
-import com.app.milkman.model.OrderRegResponse;
-import com.app.milkman.model.ProductOrdersReq;
+import com.app.milkman.model.*;
 import com.app.milkman.repository.CustomersRepository;
 import com.app.milkman.repository.OrdersRepository;
 import com.app.milkman.repository.ProductOrdersRepository;
 import com.app.milkman.repository.ProductsRepository;
 import com.app.milkman.service.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -58,8 +61,14 @@ public class OrderServiceImpl implements OrderService {
         //order detail
         orders.setOrderDateTime(LocalDateTime.now());
         orders.setDeliveryTimeSlot(orderRegRequest.getDeliveryTimeSlot());
-        orders.setDeliveryDate(orderRegRequest.getDeliveryDate());
+        orders.setDeliveryDate(LocalDate.parse(orderRegRequest.getDeliveryDate()));
+        orders.setDeliveryCharge(BigDecimal.valueOf(orderRegRequest.getDeliveryCharge()));
         orders.setOrderStatus(ORDER_PLACED);
+        orders.setStatus(ACTIVE);
+        orders.setCreatedBy(orders.getCustomerName());
+        orders.setCreatedTime(LocalDateTime.now());
+        orders.setUpdatedBy(orders.getCustomerName());
+        orders.setUpdatedTime(LocalDateTime.now());
         List<ProductOrders> productOrders = getProductOrders(orderRegRequest.getProductOrderReqs(), orders);
 
         //Order total calculation
@@ -75,6 +84,18 @@ public class OrderServiceImpl implements OrderService {
         response.setStatus(SUCCESS);
         response.setStatusCode(SUCCESS_CODE);
         return response;
+    }
+
+    @Override
+    public List<OrderDetails> getAllOrders(Pageable pageable) {
+        Page<Orders> orders = ordersRepository.findAll(pageable);
+        return getOrderDetails(orders);
+    }
+
+    @Override
+    public List<OrderDetails> getAllOrdersByCustomerId(String customerId, Pageable pageable) {
+        Page<Orders> orders = ordersRepository.findByCustomerId(customerId, pageable);
+        return getOrderDetails(orders);
     }
 
 
@@ -99,6 +120,55 @@ public class OrderServiceImpl implements OrderService {
             return productOrder;
         }).collect(Collectors.toList());
         return productOrdersList;
+    }
+
+
+    private List<OrderDetails> getOrderDetails(Page<Orders> orders){
+        List<OrderDetails> orderDetailsList = new ArrayList<>();
+        orders.forEach(order -> {
+            OrderDetails orderDetails =  OrderDetails.builder().orderId(order.getOrderId())
+                    .orderDateTime(order.getOrderDateTime())
+                    .orderStatus(order.getOrderStatus())
+                    .orderTotal(order.getOrderTotal())
+                    .address(order.getAddress())
+                    .customerId(order.getCustomerId())
+                    .customerName(order.getCustomerName())
+                    .deliveryCharge(order.getDeliveryCharge())
+                    .deliveryDate(order.getDeliveryDate())
+                    .deliveryTimeSlot(order.getDeliveryTimeSlot())
+                    .emailId(order.getEmailId())
+                    .landmark(order.getLandmark())
+                    .pinCode(order.getPinCode())
+                    .primaryPhone(order.getPrimaryPhone())
+                    .status(order.getStatus())
+                    .orderDateTime(order.getOrderDateTime())
+                    .createdBy(order.getCreatedBy())
+                    .createdTime(order.getCreatedTime())
+                    .updatedBy(order.getUpdatedBy())
+                    .updatedTime(order.getUpdatedTime())
+                    .build();
+
+            List<OrderProductDetails> orderProductDetailsList = order.getProductOrders().stream().map(po ->
+                    OrderProductDetails.builder()
+                            .productOrderId(po.getProductOrderId())
+                            .orderId(order.getOrderId())
+                            .productId(po.getProducts().getProductId())
+                            .productName(po.getProductName())
+                            .productPrice(po.getProductPrice())
+                            .quantity(po.getQuantity())
+                            .status(po.getStatus())
+                            .createdBy(po.getCreatedBy())
+                            .createdTime(po.getCreatedTime())
+                            .updatedBy(po.getUpdatedBy())
+                            .updatedTime(po.getUpdatedTime())
+                            .build()
+            ).collect(Collectors.toList());
+
+            orderDetails.setOrderProductDetails(orderProductDetailsList);
+            orderDetailsList.add(orderDetails);
+        });
+
+        return orderDetailsList;
     }
 
 

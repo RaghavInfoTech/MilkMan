@@ -7,6 +7,6 @@ public class ProductRegRequest {
     private String productId;
     private String productName;
     private String productDescription;
-    private double price;
+    private Double price;
     private String status;
 }

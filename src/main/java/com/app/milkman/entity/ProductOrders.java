@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
-@Table(name = "milkman.product_orders")
+@Table(name = "product_orders", schema = "milkman")
 public class ProductOrders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ public class ProductOrders implements Serializable {
     @JoinColumn(name = "orderid", referencedColumnName = "orderid")
     private Orders orders;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "productid", referencedColumnName = "productid")
     private Products products;
 
