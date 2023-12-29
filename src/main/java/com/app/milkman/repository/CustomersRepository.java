@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CustomersRepository extends JpaRepository<Customers, Void>, JpaSpecificationExecutor<Customers> {
 
-    List<Customers> getCustomersByEmailidOrPphoneAndAuthPin(String emailId, String phone, String authPin);
+    List<Customers> getCustomersByEmailIdOrPrimaryPhoneAndAuthPin(String emailId, String phone, String authPin);
 
     Customers findByCustomerId(String customerId);
 
