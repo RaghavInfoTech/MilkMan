@@ -42,7 +42,7 @@ CREATE TABLE milkman.orders (
 	pincode varchar NULL,
 	landmark varchar NULL,
 	orderdatetime timestamp NULL,
-	deliverydate varchar NULL,
+	deliverydate date NULL,
 	deliverytimeslot varchar NULL,
 	orderstatus varchar NULL,
 	createdby varchar NULL,
