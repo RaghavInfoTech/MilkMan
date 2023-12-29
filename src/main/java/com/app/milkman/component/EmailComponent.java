@@ -2,6 +2,7 @@ package com.app.milkman.component;
 
 import com.app.milkman.model.EmailRequest;
 import com.app.milkman.model.ParentResponse;
+import com.app.milkman.utils.Constants;
 import jdk.jfr.Unsigned;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,8 +28,10 @@ public class EmailComponent {
         simpleMailMessage.setSubject(emailRequest.getSubject());
 
         mailSender.send(simpleMailMessage);
-
-        return null;
+        ParentResponse response = new ParentResponse();
+        response.setStatusCode(Constants.SUCCESS_CODE);
+        response.setStatus(Constants.SUCCESS);
+        return response;
     }
 
 }
