@@ -12,6 +12,19 @@ spring:
     password: Welcome@1234
     initialization-mode: always
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: raghavareddy.dcn@gmail.com
+    password: wtrh ayjz wsza bsqs
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
 server:
   servlet:
     contextPath: /milkman
