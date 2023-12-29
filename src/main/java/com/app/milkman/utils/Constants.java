@@ -25,6 +25,6 @@ public class Constants {
 
     //sms
     public static final String SMS_NUMBER= "+16788204490";
-    public static final String SMS_SID= "AC77e89c0bb9d9d2d72845fcfd7eda6a1d";
-    public static final String SMS_TOKEN = "dc353890668f9eff30a7555391dc985e";
+    public static final String SMS_SID= "EFWxd1NDKAIbFR3/AMzcWaABup0BrWk9ccHz0hXKZjQHhgYfcMHNbvXvDjPRHVtY";
+    public static final String SMS_TOKEN = "zfWC+33iEW/UwXtt6hJ1GnqXnRtZ/Jkn99YbAGaUZNMB5CTGSaArq7+auTI1Rz00";
 }
