@@ -3,13 +3,13 @@ logging:
     org:
       springframework:
         jdbc:
-         core: DEBUG
+          core: DEBUG
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/milkman
+    url: jdbc:postgresql://localhost:5433/milkman
     username: postgres
-    password: testpassword
+    password: Welcome@1234
     initialization-mode: always
 
 server:

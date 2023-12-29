@@ -21,4 +21,10 @@ public class Constants {
     public static final String ORDER_PLACED = "ORDER PLACED";
     public static final String IN_PROGRESS = "IN PROGRESS";
     public static final String DELIVERED = "DELIVERED";
+
+
+    //sms
+    public static final String SMS_NUMBER= "+16788204490";
+    public static final String SMS_SID= "AC77e89c0bb9d9d2d72845fcfd7eda6a1d";
+    public static final String SMS_TOKEN = "dc353890668f9eff30a7555391dc985e";
 }
