@@ -8,8 +8,9 @@ import com.app.milkman.component.SMSComponent;
 import com.app.milkman.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+@RequestMapping("/healthCheck")
 @RestController
 public class MilkManController {
 
