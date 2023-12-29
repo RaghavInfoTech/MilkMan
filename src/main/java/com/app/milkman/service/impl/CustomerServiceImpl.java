@@ -1,5 +1,6 @@
 package com.app.milkman.service.impl;
 
+import com.app.milkman.component.JWTService;
 import com.app.milkman.entity.Customers;
 import com.app.milkman.model.CustomerAuthRequest;
 import com.app.milkman.model.CustomerAuthResponse;

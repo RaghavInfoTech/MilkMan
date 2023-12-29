@@ -1,4 +1,4 @@
-package com.app.milkman.service.impl;
+package com.app.milkman.component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

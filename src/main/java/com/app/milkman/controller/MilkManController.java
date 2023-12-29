@@ -16,7 +16,7 @@ public class MilkManController {
     @Autowired
     EncryptDecrypt encryptDecrypt;
 
-    @GetMapping("/healthcheck")
+    @GetMapping("/healthCheck")
     public String health() {
 
         return "SUCCESS";
