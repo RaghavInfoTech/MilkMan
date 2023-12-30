@@ -44,7 +44,7 @@ CREATE TABLE milkman.orders (
 	orderdatetime timestamp NULL,
 	deliverydate date NULL,
 	deliverytimeslot varchar NULL,
-	deliveryslot varchar NULL,
+	deliveryfrequency varchar NULL,
 	orderstatus varchar NULL,
 	createdby varchar NULL,
 	createdtime timestamp NULL,

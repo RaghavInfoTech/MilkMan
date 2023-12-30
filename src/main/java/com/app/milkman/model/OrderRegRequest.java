@@ -12,7 +12,7 @@ public class OrderRegRequest {
     private List<ProductOrdersReq> productOrderReqs;
     private LocalDate deliveryDate;
     private String deliveryTimeSlot;
-    private String deliverySlot;
+    private String deliveryFrequency;
     private String orderStatus;
     private double deliveryCharge;
 

@@ -53,8 +53,8 @@ public class Orders implements Serializable {
     @Column(name = "deliverytimeslot")
     private String deliveryTimeSlot;
 
-    @Column(name = "deliveryslot")
-    private String deliverySlot;
+    @Column(name = "deliveryfrequency")
+    private String deliveryFrequency;
 
     @Column(name = "orderstatus")
     private String orderStatus;

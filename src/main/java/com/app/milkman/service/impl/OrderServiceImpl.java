@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
         orders.setOrderDateTime(LocalDateTime.now());
         orders.setDeliveryTimeSlot(orderRegRequest.getDeliveryTimeSlot());
         orders.setDeliveryDate(orderRegRequest.getDeliveryDate());
-        orders.setDeliverySlot(orderRegRequest.getDeliverySlot());
+        orders.setDeliveryFrequency(orderRegRequest.getDeliveryFrequency());
         orders.setDeliveryCharge(BigDecimal.valueOf(orderRegRequest.getDeliveryCharge()));
         orders.setOrderStatus(ORDER_PLACED);
         orders.setStatus(ACTIVE);
@@ -135,7 +135,7 @@ public class OrderServiceImpl implements OrderService {
                     .deliveryCharge(order.getDeliveryCharge())
                     .deliveryDate(order.getDeliveryDate())
                     .deliveryTimeSlot(order.getDeliveryTimeSlot())
-                    .deliveryFrequency(order.getDeliverySlot())
+                    .deliveryFrequency(order.getDeliveryFrequency())
                     .emailId(order.getEmailId())
                     .landmark(order.getLandmark())
                     .pinCode(order.getPinCode())
