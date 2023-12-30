@@ -2,6 +2,7 @@ package com.app.milkman.model;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -9,8 +10,9 @@ public class OrderRegRequest {
     private String orderId;
     private String customerId;
     private List<ProductOrdersReq> productOrderReqs;
-    private String deliveryDate;
+    private LocalDate deliveryDate;
     private String deliveryTimeSlot;
+    private String deliverySlot;
     private String orderStatus;
     private double deliveryCharge;
 

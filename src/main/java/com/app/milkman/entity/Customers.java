@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -41,7 +42,7 @@ public class Customers implements Serializable {
     private String emailId;
 
     @Column(name = "dob")
-    private String dob;
+    private LocalDate dob;
 
     @Column(name = "auth_pin")
     private String authPin;

@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
             product.setProductName(productReg.getProductName());
             product.setProductDescription(productReg.getProductDescription());
             product.setProductPrice(BigDecimal.valueOf(productReg.getPrice()));
-
+            product.setStatus(productReg.getStatus());
             product.setCreatedBy(ADMIN);
             product.setCreatedTime(LocalDateTime.now());
             product.setUpdatedBy(ADMIN);
@@ -79,11 +79,11 @@ public class ProductServiceImpl implements ProductService {
             response.setStatusCode(NO_FOUND_CODE);
             return response;
         }
-        product.setProductName(!StringUtils.hasText(productReg.getProductName())
+        product.setProductName(StringUtils.hasText(productReg.getProductName())
                 ? productReg.getProductName() : product.getProductName());
-        product.setProductDescription(!StringUtils.hasText(productReg.getProductDescription())
+        product.setProductDescription(StringUtils.hasText(productReg.getProductDescription())
                 ? productReg.getProductDescription() : product.getProductDescription());
-        product.setStatus(!StringUtils.hasText(productReg.getStatus()) ? productReg.getStatus() : product.getStatus());
+        product.setStatus(StringUtils.hasText(productReg.getStatus()) ? productReg.getStatus() : product.getStatus());
         product.setProductPrice(!ObjectUtils.isEmpty(productReg.getPrice())
                 ? BigDecimal.valueOf(productReg.getPrice()) : product.getProductPrice());
         //Update DB record

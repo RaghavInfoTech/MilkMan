@@ -23,6 +23,7 @@ public class OrderDetails {
     private LocalDateTime orderDateTime;
     private LocalDate deliveryDate;
     private String deliveryTimeSlot;
+    private String deliveryFrequency;
     private String orderStatus;
     private String createdBy;
     private LocalDateTime createdTime;

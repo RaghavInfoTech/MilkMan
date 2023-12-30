@@ -10,14 +10,12 @@ import com.app.milkman.repository.OrdersRepository;
 import com.app.milkman.repository.ProductOrdersRepository;
 import com.app.milkman.repository.ProductsRepository;
 import com.app.milkman.service.OrderService;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +59,8 @@ public class OrderServiceImpl implements OrderService {
         //order detail
         orders.setOrderDateTime(LocalDateTime.now());
         orders.setDeliveryTimeSlot(orderRegRequest.getDeliveryTimeSlot());
-        orders.setDeliveryDate(LocalDate.parse(orderRegRequest.getDeliveryDate()));
+        orders.setDeliveryDate(orderRegRequest.getDeliveryDate());
+        orders.setDeliverySlot(orderRegRequest.getDeliverySlot());
         orders.setDeliveryCharge(BigDecimal.valueOf(orderRegRequest.getDeliveryCharge()));
         orders.setOrderStatus(ORDER_PLACED);
         orders.setStatus(ACTIVE);
@@ -136,6 +135,7 @@ public class OrderServiceImpl implements OrderService {
                     .deliveryCharge(order.getDeliveryCharge())
                     .deliveryDate(order.getDeliveryDate())
                     .deliveryTimeSlot(order.getDeliveryTimeSlot())
+                    .deliveryFrequency(order.getDeliverySlot())
                     .emailId(order.getEmailId())
                     .landmark(order.getLandmark())
                     .pinCode(order.getPinCode())

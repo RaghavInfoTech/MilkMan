@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -41,7 +42,6 @@ public class CustomerServiceImpl implements CustomerService {
         customers.setSecondaryPhone(custRequest.getSecondaryPhone());
         customers.setEmailId(custRequest.getEmailId());
         customers.setDob(custRequest.getDateOfBirth());
-
         customers.setAuthPin(encryptDecrypt.encrypt(custRequest.getAuthPin(), KEY));
         customers.setAddress(custRequest.getAddress());
         customers.setPinCode(custRequest.getPincode());
