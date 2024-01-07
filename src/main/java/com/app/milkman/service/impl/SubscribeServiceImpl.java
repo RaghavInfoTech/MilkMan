@@ -1,9 +1,7 @@
 package com.app.milkman.service.impl;
 
 import com.app.milkman.entity.*;
-import com.app.milkman.model.ProductOrdersReq;
-import com.app.milkman.model.SubscribeRequest;
-import com.app.milkman.model.SubscribeResponse;
+import com.app.milkman.model.*;
 import com.app.milkman.repository.CustomersRepository;
 import com.app.milkman.repository.ProductSubscriptionsRepository;
 import com.app.milkman.repository.ProductsRepository;
@@ -11,10 +9,13 @@ import com.app.milkman.repository.SubscriptionRepository;
 import com.app.milkman.service.SubscribeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,6 +36,7 @@ public class SubscribeServiceImpl implements SubscribeService {
 
     @Autowired
     private ProductSubscriptionsRepository productSubscriptionsRepository;
+
     @Override
     public SubscribeResponse subscribe(SubscribeRequest subscribeRequest) {
 
@@ -81,6 +83,7 @@ public class SubscribeServiceImpl implements SubscribeService {
         response.setStatusCode(SUCCESS_CODE);
         return response;
     }
+
     private List<ProductSubscriptions> getProductOrders(List<ProductOrdersReq> productOrderReq, Subscriptions subscriptions) {
 
         List<ProductSubscriptions> productOrdersList = productOrderReq.stream().map(po -> {
@@ -102,5 +105,68 @@ public class SubscribeServiceImpl implements SubscribeService {
             return productSubscriptions;
         }).collect(Collectors.toList());
         return productOrdersList;
+    }
+
+
+    @Override
+    public List<SubscriptionDetails> getAllOrders(Pageable pageable) {
+        Page<Subscriptions> subscriptions = subscriptionRepository.findAll(pageable);
+        return getOrderDetails(subscriptions);
+    }
+
+    @Override
+    public List<SubscriptionDetails> getAllSubscriptionsByCustomerId(String customerId, Pageable pageable) {
+        Page<Subscriptions> subscriptions = subscriptionRepository.findByCustomerId(customerId, pageable);
+        return getOrderDetails(subscriptions);
+    }
+
+    private List<SubscriptionDetails> getOrderDetails(Page<Subscriptions> orders) {
+        List<SubscriptionDetails> subscriptionDetailsList = new ArrayList<>();
+        orders.forEach(subscription -> {
+            SubscriptionDetails orderDetails = SubscriptionDetails.builder().subscriptionId(subscription.getSubscriptionId())
+                    .orderDateTime(subscription.getOrderDateTime())
+                    .orderStatus(subscription.getOrderStatus())
+                    .orderTotal(subscription.getOrderTotal())
+                    .address(subscription.getAddress())
+                    .customerId(subscription.getCustomerId())
+                    .customerName(subscription.getCustomerName())
+                    .deliveryCharge(subscription.getDeliveryCharge())
+                    .deliveryStartDate(subscription.getDeliveryStartDate())
+                    .deliveryEndDate(subscription.getDeliveryEndDate())
+                    .deliveryDays(subscription.getDeliveryDays())
+                    .deliveryTimeSlot(subscription.getDeliveryTimeSlot())
+                    .deliveryFrequency(subscription.getDeliveryFrequency())
+                    .emailId(subscription.getEmailId())
+                    .landmark(subscription.getLandmark())
+                    .pinCode(subscription.getPinCode())
+                    .primaryPhone(subscription.getPrimaryPhone())
+                    .status(subscription.getStatus())
+                    .orderDateTime(subscription.getOrderDateTime())
+                    .createdBy(subscription.getCreatedBy())
+                    .createdTime(subscription.getCreatedTime())
+                    .updatedBy(subscription.getUpdatedBy())
+                    .updatedTime(subscription.getUpdatedTime())
+                    .build();
+
+            List<SubscriptionProductDetails> orderProductDetailsList = subscription.getProductSubscriptions().stream().map(po ->
+                    SubscriptionProductDetails.builder()
+                            .productSubscriptionId(po.getProductSubscriptionId())
+                            .subscriptionId(subscription.getSubscriptionId())
+                            .productId(po.getProducts().getProductId())
+                            .productName(po.getProductName())
+                            .productPrice(po.getProductPrice())
+                            .quantity(po.getQuantity())
+                            .status(po.getStatus())
+                            .createdBy(po.getCreatedBy())
+                            .createdTime(po.getCreatedTime())
+                            .updatedBy(po.getUpdatedBy())
+                            .updatedTime(po.getUpdatedTime())
+                            .build()
+            ).collect(Collectors.toList());
+
+            orderDetails.setSubscriptionProductDetails(orderProductDetailsList);
+            subscriptionDetailsList.add(orderDetails);
+        });
+        return subscriptionDetailsList;
     }
 }

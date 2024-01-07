@@ -9,4 +9,6 @@ public interface SubscribeService {
 
 
     SubscribeResponse subscribe(SubscribeRequest subscribeRequest);
+    List<SubscriptionDetails> getAllOrders(Pageable pageable);
+    List<SubscriptionDetails> getAllSubscriptionsByCustomerId(String customerId, Pageable pageable);
 }

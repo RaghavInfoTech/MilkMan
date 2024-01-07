@@ -25,6 +25,18 @@ public class SubscribeController {
         return subscribeService.subscribe(subscribeRequest);
     }
 
+    @GetMapping("/getAllSubscriptions")
+    public List<SubscriptionDetails> getAllOrders(Pageable pageable) {
+        log.debug("Get all orders method invoked!!! {}", pageable);
 
+        return subscribeService.getAllOrders(pageable);
+    }
 
+    @GetMapping("/getAllSubscriptions/{customerId}")
+    public List<SubscriptionDetails> getAllOrdersByCustomerId(@PathVariable("customerId") String customerId,
+                                                              Pageable pageable) {
+        log.debug("Get all orders by customer id method invoked!!! {}", pageable);
+
+        return subscribeService.getAllSubscriptionsByCustomerId(customerId, pageable);
+    }
 }
