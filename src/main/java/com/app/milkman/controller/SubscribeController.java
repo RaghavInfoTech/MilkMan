@@ -20,14 +20,14 @@ public class SubscribeController {
 
     @PostMapping("/create")
     public SubscribeResponse createOrder(@RequestBody SubscribeRequest subscribeRequest) {
-        log.debug("Order created method invoked!!! {}", subscribeRequest);
+        log.debug("Subscription created method invoked!!! {}", subscribeRequest);
 
         return subscribeService.subscribe(subscribeRequest);
     }
 
     @GetMapping("/getAllSubscriptions")
     public List<SubscriptionDetails> getAllOrders(Pageable pageable) {
-        log.debug("Get all orders method invoked!!! {}", pageable);
+        log.debug("Get all subscriptions method invoked!!! {}", pageable);
 
         return subscribeService.getAllOrders(pageable);
     }
@@ -35,7 +35,7 @@ public class SubscribeController {
     @GetMapping("/getAllSubscriptions/{customerId}")
     public List<SubscriptionDetails> getAllOrdersByCustomerId(@PathVariable("customerId") String customerId,
                                                               Pageable pageable) {
-        log.debug("Get all orders by customer id method invoked!!! {}", pageable);
+        log.debug("Get all subscription by customer id method invoked!!! {}", pageable);
 
         return subscribeService.getAllSubscriptionsByCustomerId(customerId, pageable);
     }
