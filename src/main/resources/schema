@@ -79,7 +79,6 @@ CREATE TABLE milkman.products (
 
 -- milkman.product_orders definition
 
--- Drop table
 
 -- DROP TABLE milkman.product_orders;
 
@@ -97,4 +96,53 @@ CREATE TABLE milkman.product_orders (
 	status varchar NULL,
 	CONSTRAINT product_orders_fk FOREIGN KEY (orderid) REFERENCES milkman.orders(orderid),
 	CONSTRAINT product_orders_fk_1 FOREIGN KEY (productid) REFERENCES milkman.products(productid)
+);
+
+-- milkman.subscriptions definition
+
+-- DROP TABLE milkman.subscriptions;
+
+CREATE TABLE milkman.subscriptionid (
+	subscriptionid varchar NOT NULL,
+	customerid varchar NOT NULL,
+	customername varchar NOT NULL,
+	pphone varchar NULL,
+	emailid varchar NULL,
+	address varchar NOT NULL,
+	pincode varchar NOT NULL,
+	landmark varchar NULL,
+	orderdatetime timestamp NULL,
+	deliverystartdate date NULL,
+	deliveryenddate date NULL,
+	deliverytimeslot varchar NULL,
+	deliveryfrequency varchar NULL,
+	deliverydays varchar NULL,
+	orderstatus varchar NULL,
+    deliverycharge numeric NULL,
+	ordertotal numeric NULL,
+	createdby varchar NULL,
+	createdtime timestamp NULL,
+	updatedby varchar NULL,
+	updatedtime timestamp NULL,
+	status varchar NULL,
+	CONSTRAINT subscriptions_fk FOREIGN KEY (subscriptionid) REFERENCES milkman.subscriptions(subscriptionid),
+	CONSTRAINT subscriptions_fk_1 FOREIGN KEY (subscriptionid) REFERENCES product_subscriptions(subscriptionid)
+);
+
+-- milkman.product_subscriptions definition
+
+-- DROP TABLE milkman.product_subscriptions;
+
+CREATE TABLE milkman.product_subscriptions (
+	product_subscription_id varchar NOT NULL,
+	subscriptionid varchar NOT NULL,
+	productid varchar NULL,
+	productname varchar NULL,
+	productprice numeric NOT NULL,
+	quantity int4 NOT NULL,
+	createdby varchar NULL,
+	createdtime timestamp NULL,
+	updatedby varchar NULL,
+	updatedtime timestamp NULL,
+	status varchar NULL,
 );
