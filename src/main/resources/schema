@@ -102,7 +102,7 @@ CREATE TABLE milkman.product_orders (
 
 -- DROP TABLE milkman.subscriptions;
 
-CREATE TABLE milkman.subscriptionid (
+CREATE TABLE milkman.subscriptions (
 	subscriptionid varchar NOT NULL,
 	customerid varchar NOT NULL,
 	customername varchar NOT NULL,
@@ -125,8 +125,7 @@ CREATE TABLE milkman.subscriptionid (
 	updatedby varchar NULL,
 	updatedtime timestamp NULL,
 	status varchar NULL,
-	CONSTRAINT subscriptions_fk FOREIGN KEY (subscriptionid) REFERENCES milkman.subscriptions(subscriptionid),
-	CONSTRAINT subscriptions_fk_1 FOREIGN KEY (subscriptionid) REFERENCES product_subscriptions(subscriptionid)
+	CONSTRAINT subscriptions_pk PRIMARY KEY (subscriptionid)
 );
 
 -- milkman.product_subscriptions definition
