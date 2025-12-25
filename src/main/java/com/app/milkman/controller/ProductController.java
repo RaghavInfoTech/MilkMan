@@ -21,22 +21,25 @@ public class ProductController {
 
     @PostMapping("/register")
     public ProductRegResponse registerProduct(@RequestBody ProductRegRequest productReg) {
-        log.debug("Product register method invoked!!! {}", productReg);
-
+        log.info("[Product Registration Request] Product registration endpoint invoked for: {}", 
+                 productReg.getProductName());
+        
         return productService.registerProduct(productReg);
     }
 
     @PutMapping("/update")
     public ProductRegResponse updateProduct(@RequestBody ProductRegRequest productReg) {
-        log.debug("Product update method invoked!!! {}", productReg);
-
+        log.info("[Product Update Request] Product update endpoint invoked for ID: {}", 
+                 productReg.getProductId());
+        
         return productService.updateProduct(productReg);
     }
 
     @GetMapping("/getProducts")
     public List<ProductDetails> getAllProducts(Pageable pageable) {
-        log.debug("Get all products method invoked!!! {}", pageable);
-
+        log.info("[Product List Request] Get all products endpoint invoked (Page: {}, Size: {})",
+                 pageable.getPageNumber(), pageable.getPageSize());
+        
         return productService.getAllProducts(pageable);
     }
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class CustomerAuthResponse extends ParentResponse {
     private String authToken;
+    private String refreshToken;
     private String customerName;
     private String customerId;
 }

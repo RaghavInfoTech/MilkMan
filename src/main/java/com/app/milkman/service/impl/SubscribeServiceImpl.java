@@ -39,6 +39,7 @@ public class SubscribeServiceImpl implements SubscribeService {
 
     @Override
     public SubscribeResponse subscribe(SubscribeRequest subscribeRequest) {
+        log.info("[Subscription Creation] Creating subscription for customer ID: {}", subscribeRequest.getCustomerId());
 
         Customers customers = customersRepository.findByCustomerId(subscribeRequest.getCustomerId());
 
@@ -76,6 +77,11 @@ public class SubscribeServiceImpl implements SubscribeService {
 
         Subscriptions subscriptionDetails = subscriptionRepository.save(subscriptions);
         List<ProductSubscriptions> saveProductOrders = productSubscriptionsRepository.saveAll(productSubscriptions);
+        
+        log.info("[Subscription Creation] Successfully created subscription ID: {} for customer: {} with {} products, Total: {} (from {} to {})", 
+                 subscriptionDetails.getSubscriptionId(), subscriptionDetails.getCustomerName(), 
+                 saveProductOrders.size(), subscriptionDetails.getOrderTotal(),
+                 subscriptionDetails.getDeliveryStartDate(), subscriptionDetails.getDeliveryEndDate());
 
         //Response generation
         SubscribeResponse response = SubscribeResponse.builder().subscriptionId(subscriptions.getSubscriptionId()).build();
@@ -110,14 +116,21 @@ public class SubscribeServiceImpl implements SubscribeService {
 
     @Override
     public List<SubscriptionDetails> getAllOrders(Pageable pageable) {
+        log.info("[Subscription Retrieval] Fetching all subscriptions with pagination - Page: {}, Size: {}", 
+                 pageable.getPageNumber(), pageable.getPageSize());
         Page<Subscriptions> subscriptions = subscriptionRepository.findAll(pageable);
-        return getOrderDetails(subscriptions);
+        List<SubscriptionDetails> details = getOrderDetails(subscriptions);
+        log.info("[Subscription Retrieval] Retrieved {} subscriptions", details.size());
+        return details;
     }
 
     @Override
     public List<SubscriptionDetails> getAllSubscriptionsByCustomerId(String customerId, Pageable pageable) {
+        log.info("[Subscription Retrieval] Fetching subscriptions for customer ID: {}", customerId);
         Page<Subscriptions> subscriptions = subscriptionRepository.findByCustomerId(customerId, pageable);
-        return getOrderDetails(subscriptions);
+        List<SubscriptionDetails> details = getOrderDetails(subscriptions);
+        log.info("[Subscription Retrieval] Retrieved {} subscriptions for customer: {}", details.size(), customerId);
+        return details;
     }
 
     private List<SubscriptionDetails> getOrderDetails(Page<Subscriptions> orders) {

@@ -10,6 +10,7 @@ import com.app.milkman.repository.OrdersRepository;
 import com.app.milkman.repository.ProductOrdersRepository;
 import com.app.milkman.repository.ProductsRepository;
 import com.app.milkman.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 
 import static com.app.milkman.utils.Constants.*;
 
+@Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -41,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderRegResponse createOrder(OrderRegRequest orderRegRequest) {
+        log.info("[Order Creation] Creating order for customer ID: {}", orderRegRequest.getCustomerId());
 
         Customers customers = customersRepository.findByCustomerId(orderRegRequest.getCustomerId());
 
@@ -77,6 +80,10 @@ public class OrderServiceImpl implements OrderService {
 
         Orders saveOrder = ordersRepository.save(orders);
         List<ProductOrders> saveProductOrders = productOrdersRepository.saveAll(productOrders);
+        
+        log.info("[Order Creation] Successfully created order ID: {} for customer: {} with {} items, Total: {}", 
+                 saveOrder.getOrderId(), saveOrder.getCustomerName(), 
+                 saveProductOrders.size(), saveOrder.getOrderTotal());
 
         //Response generation
         OrderRegResponse response = OrderRegResponse.builder().orderId(saveOrder.getOrderId()).build();
@@ -87,14 +94,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDetails> getAllOrders(Pageable pageable) {
+        log.info("[Order Retrieval] Fetching all orders with pagination - Page: {}, Size: {}", 
+                 pageable.getPageNumber(), pageable.getPageSize());
         Page<Orders> orders = ordersRepository.findAll(pageable);
-        return getOrderDetails(orders);
+        List<OrderDetails> orderDetails = getOrderDetails(orders);
+        log.info("[Order Retrieval] Retrieved {} orders", orderDetails.size());
+        return orderDetails;
     }
 
     @Override
     public List<OrderDetails> getAllOrdersByCustomerId(String customerId, Pageable pageable) {
+        log.info("[Order Retrieval] Fetching orders for customer ID: {}", customerId);
         Page<Orders> orders = ordersRepository.findByCustomerId(customerId, pageable);
-        return getOrderDetails(orders);
+        List<OrderDetails> orderDetails = getOrderDetails(orders);
+        log.info("[Order Retrieval] Retrieved {} orders for customer: {}", orderDetails.size(), customerId);
+        return orderDetails;
     }
 
 

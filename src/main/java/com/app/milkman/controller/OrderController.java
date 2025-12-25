@@ -21,23 +21,26 @@ public class OrderController {
 
     @PostMapping("/create")
     public OrderRegResponse createOrder(@RequestBody OrderRegRequest orderReq) {
-        log.debug("Order created method invoked!!! {}", orderReq);
-
+        log.info("[Order Creation Request] Order creation endpoint invoked for customer: {}", 
+                 orderReq.getCustomerId());
+        
         return orderService.createOrder(orderReq);
     }
 
     @GetMapping("/getAllOrders")
     public List<OrderDetails> getAllOrders(Pageable pageable) {
-        log.debug("Get all orders method invoked!!! {}", pageable);
-
+        log.info("[Order List Request] Get all orders endpoint invoked (Page: {}, Size: {})",
+                 pageable.getPageNumber(), pageable.getPageSize());
+        
         return orderService.getAllOrders(pageable);
     }
 
     @GetMapping("/getAllOrders/{customerId}")
     public List<OrderDetails> getAllOrdersByCustomerId(@PathVariable("customerId") String customerId,
                                                        Pageable pageable) {
-        log.debug("Get all orders by customer id method invoked!!! {}", pageable);
-
+        log.info("[Order List Request] Get orders endpoint invoked for customer: {} (Page: {}, Size: {})",
+                 customerId, pageable.getPageNumber(), pageable.getPageSize());
+        
         return orderService.getAllOrdersByCustomerId(customerId, pageable);
     }
 

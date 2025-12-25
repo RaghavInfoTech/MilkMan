@@ -20,23 +20,26 @@ public class SubscribeController {
 
     @PostMapping("/create")
     public SubscribeResponse createOrder(@RequestBody SubscribeRequest subscribeRequest) {
-        log.debug("Subscription created method invoked!!! {}", subscribeRequest);
-
+        log.info("[Subscription Creation Request] Subscription endpoint invoked for customer: {}", 
+                 subscribeRequest.getCustomerId());
+        
         return subscribeService.subscribe(subscribeRequest);
     }
 
     @GetMapping("/getAllSubscriptions")
     public List<SubscriptionDetails> getAllOrders(Pageable pageable) {
-        log.debug("Get all subscriptions method invoked!!! {}", pageable);
-
+        log.info("[Subscription List Request] Get all subscriptions endpoint invoked (Page: {}, Size: {})",
+                 pageable.getPageNumber(), pageable.getPageSize());
+        
         return subscribeService.getAllOrders(pageable);
     }
 
     @GetMapping("/getAllSubscriptions/{customerId}")
     public List<SubscriptionDetails> getAllOrdersByCustomerId(@PathVariable("customerId") String customerId,
                                                               Pageable pageable) {
-        log.debug("Get all subscription by customer id method invoked!!! {}", pageable);
-
+        log.info("[Subscription List Request] Get subscriptions endpoint invoked for customer: {} (Page: {}, Size: {})",
+                 customerId, pageable.getPageNumber(), pageable.getPageSize());
+        
         return subscribeService.getAllSubscriptionsByCustomerId(customerId, pageable);
     }
 }
